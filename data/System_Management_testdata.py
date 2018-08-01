@@ -77,8 +77,8 @@ testdata_fly_auth_001={
         "noPassReason":"",
 }
 # ------------------------------ case: system query order----------------------
-testdata_001_query_ordernumber="36631532941878875"
-
+testdata_001_query_ordernumber="95211533111078704"
+testdata_001_flyuser_phone='18301212965'
 
 #---------------------------------sys query flyuser assign----------------------------------------
 testdata_sys_query_assignflyuser_001={

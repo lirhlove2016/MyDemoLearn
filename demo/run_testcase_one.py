@@ -9,9 +9,6 @@ import time
 import common.HTMLTestRunner as HTMLTestRunner
 import os
 from testcase import test_one_case_demo as test_fsd
-from testcase import test_FSD_submit_order_readdata as test_fsd_suborder
-from testcase import test_SYS_assign_order_to_flyuser as test_sys_assignorder
-
 
 from conf.conf import *
 
@@ -26,11 +23,7 @@ print(report_path)
 
 #构造测试集
 suite = unittest.TestSuite()
-#testcasefile.calssname(foo)
-
-#suite.addTest(test_sys_assignorder.TestSYS_assginOrder_to_flyuser('test_SYS_assignorder'))
-#suite.addTest(test_sys_assignorder.TestSYS_assginOrder_to_flyuser('test_fsd_take_order_from_msg'))
-suite.addTest(test_fsd_suborder.TestFSD_SubmitOrder('test_FSD_SubmitOrder'))
+suite.addTest(test_fsd.TestFSD_Login('test_fsd_login'))
 
 
 if __name__=='__main__':
