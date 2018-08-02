@@ -73,7 +73,7 @@ def test_sys_queryassignflyuser(token,order_id,phone,data):
     
 #--------------------------------------------------------  
 #case4--sysMagement assignflyuser
-def test_sys_sys_publishorder(token,order_id,order_number,flyuser_id,data):   
+def test_sys_publishorder(token,order_id,order_number,flyuser_id,data):   
     ret=my_obj.sys_publishorder(token,order_id,order_number,flyuser_id,data)
     if ret!=1:
         print('error')
@@ -156,7 +156,7 @@ if __name__ == "__main__" :
     #step4:publish flyuser
     print('flyuserid type',type(flyuser_id),flyuser_id)
 
-    result=test_sys_sys_publishorder(token,order_id,order_number,flyuser_id,assignflyuser)
+    result=test_sys_publishorder(token,order_id,order_number,flyuser_id,assignflyuser)
 
     #fsd  take order
     #--------------------------------------

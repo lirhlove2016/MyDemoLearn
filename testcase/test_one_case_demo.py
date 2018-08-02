@@ -26,7 +26,6 @@ my_obj = FSDLogin()
 flyuserdata=flyuser.testdata_FSD_login_userdata_001
 phone='14433334003'
 
-
 class TestFSD_Login(unittest.TestCase):
     """fsd login"""
     
@@ -50,26 +49,18 @@ class TestFSD_Login(unittest.TestCase):
             #print(token,userid)
             return datalist
 
-
     def tearDown(self):
         print('-------TEST END----------------- ')
 
-
 if __name__ == '__main__':
-
-    #unittest.main()
-
-  
+    #unittest.main()  
     # 1、构造用例集
     suite = unittest.TestSuite()
-
     # 2、执行顺序是安加载顺序：先执行test_sub，再执行test_add
     suite.addTest(TestFSD_Login("test_fsd_login"))
     #suite.addTest(TestOne("test_add"))
-
     # 3、实例化runner类
     runner = unittest.TextTestRunner()
-
     # 4、执行测试
     runner.run(suite)
 

@@ -114,6 +114,6 @@ testdata_sys_assign_flyuser_001={
             "isAll":"1",
 		}
 # ------------------------------ case: system asgin order and flyuser submit order----------------------
-testdata_001_query_ordernumber="62451533201554363"
+testdata_001_query_ordernumber="55891533227302876"
 testdata_001_flyuser_phone='18301212965'
 testdata_001_flyuser_submit_order_area=300

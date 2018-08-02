@@ -4,9 +4,18 @@ testcase_for_FSD_login
 3.x
 '''
 
+
+from requests_toolbelt import MultipartEncoder
+
+
+
 import string
 import json
 import sys
+
+
+
+
 from common.basic_http import * 
 from conf import server_config as device
 from conf import api_url as api
@@ -32,7 +41,6 @@ ywb_addorder_data=ywbuser.testdata_ywb_addorder_001
 
 #mendian
 userinfodata=mduser.testdata_MD_getwxuser_data_001
-
 
 
 
@@ -65,9 +73,8 @@ def test_ywb_addorder(userid,token,phone,data):
     ret=my_obj.ywb_addorder(userid,token,phone,data)
     if ret[0]!=0:
         token=ret[1]
-        accountId=ret[0]
         
-        return token,accountId
+        return token
     else:
         print('error')
         return "error"
@@ -92,7 +99,7 @@ def test_md_getwxuserinfo(data):
 if __name__ == "__main__" :
     
     #data
-    '''
+
     #1.ywb login    
     datalist=test_ywb_login(ywblogindata)
     print(datalist)
@@ -108,18 +115,17 @@ if __name__ == "__main__" :
     #拜访人，不带药，不开发票
     result=test_ywb_addorder(userid,token,ywb_phone,ywb_addorder_data)
     '''
+    
     #mendian getwxuserinfo
     result=test_md_getwxuserinfo(userinfodata)
     if result!='error':
         userid=result[1]
         token=result[0]
-    
+    '''
     
     
 
     
-
-  
 
     
       

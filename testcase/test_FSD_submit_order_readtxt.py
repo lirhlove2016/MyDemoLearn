@@ -5,23 +5,22 @@
 '''
 
 import unittest
-from common import HTMLTestRunner
-from  time  import sleep
-
-
-from modules.FSD_ReserveOrder_module import *
-from modules.SYS_FSD_submit_order import *
-
-
 import string
 import json
-import sys
-from common.basic_http import * 
-from conf import server_config as device
-from conf import api_url as api
 import time
 import datetime
 import os
+from common import HTMLTestRunner
+from  time  import sleep
+
+import sys
+from common.basic_http import * 
+
+from conf import server_config as device
+from conf import api_url as api
+
+from modules.FSD_ReserveOrder_module import *
+from modules.SYS_FSD_submit_order import *
 
 from  data import Flyuser_testdata as flyuser
 from  data import System_Management_testdata as sysuser

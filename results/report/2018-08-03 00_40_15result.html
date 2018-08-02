@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>测试报告</title>
+    <title>测试报告 测试环境</title>
     <meta name="generator" content="HTMLTestRunner 0.8.4"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     
@@ -248,9 +248,9 @@ function close_shots(obj) {
     </div>
 </div>
 <div class='heading'>
-<h1>测试报告</h1>
-<p class='attribute'><strong>开始时间:</strong> 2018-08-01 15:57:17</p>
-<p class='attribute'><strong>耗时:</strong> 0:00:07.277172</p>
+<h1>测试报告 测试环境</h1>
+<p class='attribute'><strong>开始时间:</strong> 2018-08-03 00:40:15</p>
+<p class='attribute'><strong>耗时:</strong> 0:00:03.306189</p>
 <p class='attribute'><strong>状态:</strong> 通过 1</p>
 
 <p class='description'>用例的执行情况</p>
@@ -285,7 +285,7 @@ function close_shots(obj) {
 </tr>
 
 <tr class='passClass'>
-    <td>testcase.test_FSD_submit_order_readdata.TestFSD_SubmitOrder: fsd SubmitOrderwork</td>
+    <td>testcase.test_SYS_assign_order_to_flyuser.Test_addorder_assginOrder_submitorder: systemManegement assign order to flyuserr</td>
     <td>1</td>
     <td>1</td>
     <td>0</td>
@@ -295,7 +295,7 @@ function close_shots(obj) {
 </tr>
 
 <tr id='pt1.1'>
-    <td class='none'><div class='testcase'>test_FSD_SubmitOrder</div></td>
+    <td class='none'><div class='testcase'>test_SYS_assignorder</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -310,44 +310,60 @@ function close_shots(obj) {
         <pre>
         
 pt1.1: ---------TEST START-------------
-flyuser already take the order,now start submit the workresult..........
-
-this is your order datas：
----------------------------------------------------------------------------
-no     orderNumber   phone   ids    area    msg_id       token             
----------------------------------------------------------------------------
-1 29061532504875539 18301212965 2187 250 100000002682324 981a2e25624548aebec24cafc243599e
-2 62561532504867080 18301212965 2187 200 100000002682324 59c4a437c8084b4d8a0a1f90d2d28cfb
--------------------------------------------------------------------------
-
-Test data and api url | {'actualWorkEndTime': '1533026820', 'actual_area': '250', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]', 'userid': '2187', 'totalSprayedDays': '1', 'orderNumber': '29061532504875539', 'fly_actual_area': '250', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'msgId': '100000002682324', 'actualWorkStartTime': '1533021900', 'state': '4'} |  /flyHandApp/api/order/updateOrderState?access_phone=18301212965&amp;userId=2187&amp;token=981a2e25624548aebec24cafc243599e
+{'passWord': '123456', 'userName': 'lirunhua'} 
+ /management/sys/login
 ------------------------------------------------------------------------------
 start post request....
 ip: ceshi.farmfriend.com.cn
 port: 80
-url: /flyHandApp/api/order/updateOrderState?access_phone=18301212965&amp;userId=2187&amp;token=981a2e25624548aebec24cafc243599e
+url: /management/sys/login
 timeout 10
-{'content-type': 'application/x-www-form-urlencoded'}
-post data  {'actualWorkEndTime': '1533026820', 'actual_area': '250', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]', 'userid': '2187', 'totalSprayedDays': '1', 'orderNumber': '29061532504875539', 'fly_actual_area': '250', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'msgId': '100000002682324', 'actualWorkStartTime': '1533021900', 'state': '4'}
-response:  {'datas': {'isShowFlag': '1'}, 'info': '操作成功', 'errorCode': 0}
+
+post data {'passWord': '123456', 'userName': 'lirunhua'}
+text {"errno":0,"data":{"FARMFRIEND_TOKEN":"eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0=","FARMFRIEND_LT":"1533228011902"}}
+eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0=
+farmtoken= eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0=
+response  {'data': {'FARMFRIEND_LT': '1533228011902', 'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0='}, 'errno': 0}
 errorCode = 0
-Passed: fsd submitorder successed. 
-2187 18301212965 981a2e25624548aebec24cafc243599e 29061532504875539 100000002682324 {'actualWorkEndTime': '1533026820', 'actual_area': '250', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]', 'userid': '2187', 'totalSprayedDays': '1', 'orderNumber': '29061532504875539', 'fly_actual_area': '250', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'msgId': '100000002682324', 'actualWorkStartTime': '1533021900', 'state': '4'} 250
-Test data and api url | {'actualWorkEndTime': '1533026820', 'actual_area': '200', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]', 'userid': '2187', 'totalSprayedDays': '1', 'orderNumber': '62561532504867080', 'fly_actual_area': '200', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'msgId': '100000002682324', 'actualWorkStartTime': '1533021900', 'state': '4'} |  /flyHandApp/api/order/updateOrderState?access_phone=18301212965&amp;userId=2187&amp;token=59c4a437c8084b4d8a0a1f90d2d28cfb
+{'FARMFRIEND_LT': '1533228011902', 'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0='}
+passed:System login successed
+eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0=
 ------------------------------------------------------------------------------
 start post request....
 ip: ceshi.farmfriend.com.cn
 port: 80
-url: /flyHandApp/api/order/updateOrderState?access_phone=18301212965&amp;userId=2187&amp;token=59c4a437c8084b4d8a0a1f90d2d28cfb
+url: /management/order/queryFlyOrderList
 timeout 10
-{'content-type': 'application/x-www-form-urlencoded'}
-post data  {'actualWorkEndTime': '1533026820', 'actual_area': '200', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]', 'userid': '2187', 'totalSprayedDays': '1', 'orderNumber': '62561532504867080', 'fly_actual_area': '200', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'msgId': '100000002682324', 'actualWorkStartTime': '1533021900', 'state': '4'}
-response:  {'info': '此订单不是您接的,您不能操作！', 'errorCode': 1}
-errorCode = 1
-error_msg = 此订单不是您接的,您不能操作！
-Failed:fsd submitorder failed
-error
-2187 18301212965 59c4a437c8084b4d8a0a1f90d2d28cfb 62561532504867080 100000002682324 {'actualWorkEndTime': '1533026820', 'actual_area': '200', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]', 'userid': '2187', 'totalSprayedDays': '1', 'orderNumber': '62561532504867080', 'fly_actual_area': '200', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'msgId': '100000002682324', 'actualWorkStartTime': '1533021900', 'state': '4'} 200
+{'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0=', 'Content-Type': 'application/x-www-form-urlencoded'}
+post data  {'3': 't', 'salesman_name': '', 'order_number': '', 'hasMedicine': '-1', '2': 's', 'acceptOrderPeople': '', 'teamWork': '-1', '0': 'p', 'region': '', 'makePeople': '', 'type': '1', 'flyUserType': '-1', 'isPay': '-1', 'salesmanId': '-1', '1': 'o', 'sonCompanyId': '-1', 'endCreateTime': '2018-12-31', 'sort': '', 'medicineServie': '-1', 'isLongReserve': '-1', 'state': '-1', 'sopTagid': '', 'crops_name': '-1', 'page': '1', 'phone': '', 'startCreateTime': '2018-01-01', 'fromSalesmanManage': '0', 'isTest': '0', 'order': '', 'workAddress': ''}
+errorno = 0
+Passed:sys query orderlist  successed
+get order_id of 17679
+Test data and api url | {'address': '', 'page': '1', 'isInnerUser': '-1', 'role': '-1', 'order': 'asc', 'isBusy': '-1', 'isAll': '1', 'phone': '18301212965', 'name': '', 'label': '-1', 'id': 17679, 'time': datetime.date(2018, 8, 3), 'rows': '50', 'teamName': '', 'region': '-1', 'reserveRole': '-1', 'sort': 'xy'} |  /management/user/queryAssignFlyUser
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /management/user/queryAssignFlyUser
+timeout 10
+{'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0=', 'Content-Type': 'application/x-www-form-urlencoded'}
+post data  {'address': '', 'page': '1', 'isInnerUser': '-1', 'role': '-1', 'order': 'asc', 'isBusy': '-1', 'isAll': '1', 'phone': '18301212965', 'name': '', 'label': '-1', 'id': 17679, 'time': datetime.date(2018, 8, 3), 'rows': '50', 'teamName': '', 'region': '-1', 'reserveRole': '-1', 'sort': 'xy'}
+errorno = 0
+Passed:sys query assign flyuser  successed
+get flyuser_id of 2187
+2187
+flyuserid type &lt;class 'int'&gt; 2187
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /management/order/publishOrder
+timeout 10
+{'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiNmY2MDA5ZGEtYzAxMS00MjYyLWI3NzEtNDYwYzg5MzBjMzI1In0=', 'Content-Type': 'application/x-www-form-urlencoded'}
+post data  {'subsidyPercentage': '1', 'id': 17679, 'planeNum': '0', 'orderNumber': '55891533227302876', 'sendType': '1', 'workStartTime': '2018-08-03', 'isTeam': '0', 'extractingPercentage': '2.7', 'flyUser': 2187, 'isAll': '1', 'days': '1', 'teamUserNum': '1'}
+response:  {'errmsg': 'null派单成功!', 'errno': 0, 'data': {'batch': '20180803124014934'}}
+errorno = 0
+Passed:sys  assign flyuser  successed
 -------TEST END----------------- 
 
 

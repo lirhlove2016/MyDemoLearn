@@ -58,25 +58,34 @@ area=sysuser.testdata_001_flyuser_submit_order_area
 '''
 
 class Test_addorder_assginOrder_submitorder(unittest.TestCase):
-    """systemManegement assign order to flyuserr"""
+    """flyuser take order and submit order"""
 	        
     def setUp(self):
         print('---------TEST START-------------')
 
-    #case1--sys 派单给飞手
-    def test_SYS_assignorder(self):
-        #sys assign order
-        #------------------------sys
+    #1,YWB addorder and assignorder
+    def test_addorder_and_submitrder(self):
+        """flyuser take order and submit order"""
+
+        ''''
+        #1.ywb addorder
+        ywblogin=Test_addorder()
+        order_number=ywblogin.test_ywb_add_order()
+        print(type(order_number))
+
+        '''
+        order_number="73781533228463687"
+        #2.sys assign order to flyuser
         #step1:sys login   
         result=test_sys_mangement_login(syslogindata)
-        
-        #step2:queryorder of irdernumber
+      
+        #step2:queryorder of ordernumber
         if result!='error':
             token=result
         print(token)
-       
-            
-        result=test_sys_queryorderlist(token,ordernumber)
+ 
+        result=test_sys_queryorderlist(token,order_number)
+        
         if result!='error':
             order_id=result
 
@@ -88,11 +97,14 @@ class Test_addorder_assginOrder_submitorder(unittest.TestCase):
         print(flyuser_id)
         
         #step4:publish flyuser
-        print('flyuserid type',type(flyuser_id),flyuser_id)
-        result=test_sys_publishorder(token,order_id,ordernumber,flyuser_id,assignflyuser)
-    
-    #2:take order
-    def test_fsd_take_order_from_msg(self):
+        print('order_number',type(order_number),order_number)
+        print('order_number----------------------\n',order_number)
+        print('--------------------------------------------------------\n')
+        result=test_sys_publishorder(token,order_id,order_number,flyuser_id,assignflyuser)
+
+        '''
+
+        #3.flyuser take order and submit workreport
         """flyuser take order"""		
         datalist=test_fsd_login(flyuser_phone,flyuserdata)
         print(datalist)
@@ -112,24 +124,16 @@ class Test_addorder_assginOrder_submitorder(unittest.TestCase):
         #7.fsd orderprompt
         #点击接单的弹窗
         time.sleep(5)
-        result=test_fsd_orderpromptquery(ids,token,flyuser_phone,msg_id,ordernumber)
+        result=test_fsd_orderpromptquery(ids,token,flyuser_phone,msg_id,order_number)
         
         #8.fsd updateorderstate //接单
         #确认接单
         time.sleep(1)
         #print(order_text)
-        result=test_fsd_updateorderstate(ids,token,flyuser_phone,msg_id,ordernumber,updateorderdata,order_text)
+        result=test_fsd_updateorderstate(ids,token,flyuser_phone,msg_id,order_number,updateorderdata,order_text)
 
         #9.orderboundquery
-        result=test_fsd_orderboundquery(ids,token,flyuser_phone,ordernumber)
-
-        return ids,token,msg_id
-
-    #3,take order and submit order 
-    def test_fsd_take_order_and_submit_order(self):
-        """flyuser take order and submit order"""
-        
-        ids,token,msg_id=self.test_fsd_take_order_from_msg()      
+        result=test_fsd_orderboundquery(ids,token,flyuser_phone,order_number)
         #10.fsd submit order report
         #等待timeout=10s,
         time.sleep(10)
@@ -140,43 +144,10 @@ class Test_addorder_assginOrder_submitorder(unittest.TestCase):
         print(ids,flyuser_phone,token,ordernumber,msg_id,submitorderdata,area)
         print('------------------------------------------------------------')
         
-        result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,ordernumber,submitorderdata,area)
+        result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
+    
 
-    #4,YWB addorder and assignorder
-    def test_addorder_and_submitrder(self):
-        """flyuser take order and submit order"""
-        #1.ywb addorder
-        ywblogin=Test_addorder()
-        order_number=ywblogin.test_ywb_add_order()
-
-        #2.sys assign order to flyuser
-        #sys assign order
-        #step1:sys login   
-        result=test_sys_mangement_login(syslogindata)
-        
-        #step2:queryorder of irdernumber
-        if result!='error':
-            token=result
-        print(token)
-       
-            
-        result=test_sys_queryorderlist(token,order_number)
-        if result!='error':
-            order_id=result
-
-        #step3:select assign flyuser
-        result=test_sys_queryassignflyuser(token,order_id,flyuser_phone,queryassginflyuser)
-        if result!='error':
-            flyuser_id=result
-
-        print(flyuser_id)        
-        #step4:publish flyuser
-        print('flyuserid type',type(flyuser_id),flyuser_id)
-        result=test_sys_sys_publishorder(token,order_id,order_number,flyuser_id,assignflyuser)
-
-        #3.flyuser take order and submit workreport
-        self.test_fsd_take_order_and_submit_order()
-
+        '''
         
         
         

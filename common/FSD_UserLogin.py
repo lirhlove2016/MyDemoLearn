@@ -16,6 +16,9 @@ import datetime
 import random
 import requests
 
+from requests_toolbelt import MultipartEncoder
+
+
 #2.7
 #reload(sys) 
 #sys.setdefaultencoding('utf8')
@@ -1223,30 +1226,32 @@ class FSDLogin(object):
             return flag_ywb
 
 #------------YWB add order----------------------------------------
-    def ywb_addorder(self,ids,token,phone,data):
+    def ywb_addorder(self,ids,token,phone,values):
         userdata={}
-        userdata=data        
+        userdata=values
+        datas= MultipartEncoder(fields={'data': str(json.dumps(values))}) 
 
         headers = {
-            'content-type': "application/x-www-form-urlencoded",
-                }
+            "content-type": datas.content_type
+        }
+
                
         phone=str(phone)
         ids=str(ids)
         request_url = api.API_YWB_URL['addorder'].replace("id",ids).replace("TOKEN",token).replace("PHONE",phone)
 
-        
+      
         print('Test data and api url |',userdata,'| ',request_url)
 
         # 发送post请求
-        my_request = MyRequest(request_url,userdata)
+        my_request = MyRequest(request_url,datas,headers)
         res = my_request.request_post()
         
         res=res.json()
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
 

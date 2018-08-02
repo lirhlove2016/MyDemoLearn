@@ -125,7 +125,7 @@ def test_fsd_orderboundquery(ids,token,phone,ordernumber):
 if __name__ == "__main__" :
     
     #data
-    order_number=str(66951533194609957)  #派单，接单订单编号
+    order_number=str(14991533223323128)  #派单，接单订单编号
     flyuser_phone='18301212965'   #派单飞手，接单飞手
     area=300   #actual a   #飞手提交作业亩数
 
