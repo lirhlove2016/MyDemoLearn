@@ -11,9 +11,8 @@ import os
 from testcase import test_one_case_demo as test_fsd
 from testcase import test_FSD_submit_order_readdata as test_fsd_suborder
 from testcase import test_SYS_assign_order_to_flyuser as test_sys_assignorder
-
-
 from conf.conf import *
+
 
 
 #设置report_path
@@ -28,9 +27,13 @@ print(report_path)
 suite = unittest.TestSuite()
 #testcasefile.calssname(foo)
 
-#suite.addTest(test_sys_assignorder.TestSYS_assginOrder_to_flyuser('test_SYS_assignorder'))
-#suite.addTest(test_sys_assignorder.TestSYS_assginOrder_to_flyuser('test_fsd_take_order_from_msg'))
-suite.addTest(test_fsd_suborder.TestFSD_SubmitOrder('test_FSD_SubmitOrder'))
+
+
+suite.addTest(test_sys_assignorder.TestSYS_assginOrder_to_flyuser('test_SYS_assignorder'))
+suite.addTest(test_sys_assignorder.TestSYS_assginOrder_to_flyuser('test_fsd_take_order_from_msg'))
+
+
+#suite.addTest(test_fsd_suborder.TestFSD_SubmitOrder('test_FSD_SubmitOrder_fromtxtdata'))
 
 
 if __name__=='__main__':

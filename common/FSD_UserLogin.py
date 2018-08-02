@@ -1040,50 +1040,9 @@ class FSDLogin(object):
             flag_fsd = 0
             return flag_fsd
 
+    
 
-    #------------YWB updateorderstate----------------------------------------
-    def ywb_addorder(self,ids,token,phone,data):
-        userdata={}
-        userdata=data
-        
-        userdata['state']=3  
-        userdata['userid']=ids       
-        userdata['orderNumber']=ordernumber
-        userdata['order_amount']=order_text['total_money']
-        userdata['work_time']=order_text['work_time']
-        userdata['msgId']=msg_id
-
-        headers = {
-            'content-type': "multipart/form-data; boundary=128ad4d8-7545-4b15-9f9c-070c71177258",
-                }
-        
-        phone=str(phone)
-        ids=str(ids)
-        request_url = api.API_URL['addorder'].replace("id",ids).replace("TOKEN",token).replace("PHONE",phone)
-
-        
-        print('Test data and api url |',userdata,'| ',request_url)
-
-        # 发送post请求
-        my_request = MyRequest(request_url,userdata,headers,querystring)
-        res = my_request.request_post()
-        
-        res=res.json()
-        print("response: ",res)
-
-        #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
-        #print(ret)
-
-        if  res['errorCode']==0 or res['errno']!=13:
-            print('Passed: fsd updateorderstate successed. ')
-            flag_fsd = 1
-            return flag_fsd
-        else:
-            print('Failed:fsd updateorderstate failed')
-            flag_fsd = 0
-            return flag_fsd
-
+    
 
     #------------FSD updateorderstate----------------------------------------提交作业报告
     def fsd_submitorder(self,ids,token,phone,msg_id,ordernumber,data,area):
@@ -1193,6 +1152,119 @@ class FSDLogin(object):
             print('Failed:fsd getTeaminfo failed')
             flag_fsd = 0
             return flag_fsd
+
+
+
+#------------YWB login----------------------------------------
+    def ywb_login(self,data):
+        userdata={}
+        userdata=data       
+
+        request_url = api.API_YWB_URL['ywblogin']
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        #print(ret)
+
+        if  res['errorCode']==0 or res['errno']!=13:
+            accountId=res['datas']["loginSuccess"]["accountId"]
+            token=res['datas']["loginSuccess"]["token"]
+
+            print('Get the token is %s'%token)
+            print('Get the accountId is %s'%accountId)
+            
+            print('Passed: ywb login successed. ')
+            flag_ywb = 1
+            return flag_ywb,accountId,token
+        else:
+            print('Failed:ywb login failed')
+            flag_ywb = 0
+            return flag_ywb
+
+
+#------------YWB salemanquery----------------------------------------
+    def ywb_salesmanquery(self,ids,token,data,phone):
+        userdata={}
+        userdata=data       
+        
+        phone=str(phone)
+        ids=str(ids)
+        request_url = api.API_YWB_URL['salesmanquery'].replace("id",ids).replace("TOKEN",token).replace("PHONE",phone)
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        #print(ret)
+
+
+        if  res['errorCode']==0 or res['errno']!=13:
+            
+            print('Passed: ywb salesmanquery successed. ')
+            flag_ywb = 1
+            return flag_ywb
+        else:
+            print('Failed:ywb salesmanquery failed')
+            flag_ywb = 0
+            return flag_ywb
+
+#------------YWB add order----------------------------------------
+    def ywb_addorder(self,ids,token,phone,data):
+        userdata={}
+        userdata=data
+        
+
+
+        headers = {
+            'content-type': "application/x-www-form-urlencoded",
+                }
+        
+        
+        phone=str(phone)
+        ids=str(ids)
+        request_url = api.API_YWB_URL['addorder'].replace("id",ids).replace("TOKEN",token).replace("PHONE",phone)
+
+        
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        #print(ret)
+
+
+        if  res['errorCode']==0 or res['errorCode']!=13:
+            order_number=res['datas']["payment"]["order_number"]
+
+            print('Get the ordernumber is %s'%order_number)
+            
+            print('Passed: ywb addorder successed. ')
+            flag_ywb = 1
+            return flag_ywb,order_number
+        else:
+            print('Failed:ywb addorder failed')
+            flag_ywb= 0
+            return flag_ywb
 
 
 

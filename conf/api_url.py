@@ -48,6 +48,10 @@ API_SYS_URL={
 }
 API_YWB_URL={
 	"addorder":"/businessTreasure/api/order/addOrderQuery?access_phone=PHONE&userId=id&token=TOKEN",
+	"ywblogin":"/businessTreasure/api/user/loginP",
+	"salesmanquery":"/businessTreasure/api/user/salesmanQuery?access_phone=PHONE&userId=id&token=TOKEN",
+	"cropsAllQuery":"/businessTreasure/api/tool/cropsAllQuery?access_phone=PHONE&userId=id&token=TOKEN",
+	"addorder":"/businessTreasure/api/order/addOrderQuery?access_phone=PHONE&userId=id&token=TOKEN",
 
 }
 

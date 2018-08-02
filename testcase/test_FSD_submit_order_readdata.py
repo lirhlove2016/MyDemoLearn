@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 '''
-testcase_for_FSD_login   
+飞手提交作业报告 
 3.x
 '''
 
@@ -49,25 +49,35 @@ class TestFSD_SubmitOrder(unittest.TestCase):
 
 
     #case1--FSD提交作业报告
-    def test_FSD_SubmitOrder(self):
+    def test_FSD_SubmitOrder_fromtxtdata(self):
         time.sleep(5)
-
+       
         print('flyuser already take the order,now start submit the workresult..........\n')       
         #frm file read datas
         lines=readtxt.read_from_txt(filename)
         res=readtxt.take_orderdata_from_readtxt(lines)
         readtxt.print_info(res)
-        for i  in range(len(res)):
-            ids=res[i]['ids']
-            token=res[i]['token']
+        for i  in range(len(res)): 
+            #ids=res[i]['ids']
+            #token=res[i]['token']
+
+            #ids,token from login
             msg_id=res[i]['msg_id']
             flyuser_phone=res[i]['flyuser_phone']
             order_number=res[i]['ordername']
-            area=res[i]['area']    
-            result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
+            area=res[i]['area']
 
-            print(ids,flyuser_phone,token,order_number,msg_id,submitorderdata,area)
-         
+             #1.飞手登录，提取token,userid
+            datalist=test_fsd_login(flyuser_phone,flyuserdata)
+            #print(datalist)
+            
+            ids=datalist[2]
+            token=datalist[1]
+                   
+            #2.flyuser submit order
+            print(ids,flyuser_phone,token,order_number,msg_id,submitorderdata,area) 
+            result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
+                   
     
     def tearDown(self):
             print('-------TEST END----------------- ')

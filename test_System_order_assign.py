@@ -125,11 +125,11 @@ def test_fsd_orderboundquery(ids,token,phone,ordernumber):
 if __name__ == "__main__" :
     
     #data
-    order_number=str(84331533102756156)  #派单，接单订单编号
+    order_number=str(66951533194609957)  #派单，接单订单编号
     flyuser_phone='18301212965'   #派单飞手，接单飞手
     area=300   #actual a   #飞手提交作业亩数
 
-    '''
+
     #sys assign order
     #------------------------sys
     #step1:sys login   
@@ -190,16 +190,15 @@ if __name__ == "__main__" :
     print(order_text)
     result=test_fsd_updateorderstate(ids,token,flyuser_phone,msg_id,order_number,updateorderdata,order_text)
 
-    #9.orderboundquery
-    #result=test_fsd_orderboundquery(ids,token,flyuser_phone,order_number)
+
 
     #fsd submit order reportr
     #10.fsd submit order report
 
+    #10提交作业报告
+    time.sleep(10)
     '''
-    #提交作业报告
-    time.sleep(5)
-
+    #read data from txt file
     print('flyuser already take the order,now start submit the workresult..........\n')
     #ids=2187
     #msg_id=100000002682324
@@ -222,9 +221,10 @@ if __name__ == "__main__" :
 
         print(ids,flyuser_phone,token,order_number,msg_id,submitorderdata,area)
 
-    #result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
-
-    #result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
+    '''
+    
+    #10.提交
+    result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
     
     
     

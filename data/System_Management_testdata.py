@@ -76,9 +76,7 @@ testdata_fly_auth_001={
         "flyAuthState":"3",
         "noPassReason":"",
 }
-# ------------------------------ case: system query order----------------------
-testdata_001_query_ordernumber="95211533111078704"
-testdata_001_flyuser_phone='18301212965'
+
 
 #---------------------------------sys query flyuser assign----------------------------------------
 testdata_sys_query_assignflyuser_001={
@@ -115,3 +113,7 @@ testdata_sys_assign_flyuser_001={
             "planeNum":"0",
             "isAll":"1",
 		}
+# ------------------------------ case: system asgin order and flyuser submit order----------------------
+testdata_001_query_ordernumber="62451533201554363"
+testdata_001_flyuser_phone='18301212965'
+testdata_001_flyuser_submit_order_area=300

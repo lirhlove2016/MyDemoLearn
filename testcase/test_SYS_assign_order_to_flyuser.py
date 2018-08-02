@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 '''
-testcase_for_FSD_login   
+后台派单给飞手 
 3.x
 '''
 
@@ -31,6 +31,10 @@ from  data import readtxt
 
 my_obj = FSDLogin()
 
+'''
+数据部分  start
+------------------
+'''
 #data
 #sys
 syslogindata=sysuser.testdata_system_login_userdata_001
@@ -43,11 +47,14 @@ flyuser_msgdata=flyuser.testdata_FSD_messege_data_001
 updateorderdata=flyuser.testdata_FSD_updateorderstate_001
 submitorderdata=flyuser.testdata_FSD_updateorderreport_001
 
-
 ordernumber=sysuser.testdata_001_query_ordernumber   #派单，接单订单编号
 flyuser_phone=sysuser.testdata_001_flyuser_phone
+area=sysuser.testdata_001_flyuser_submit_order_area
 
-
+'''
+数据部分  end
+-----------
+'''
 
 
 class TestSYS_assginOrder_to_flyuser(unittest.TestCase):
@@ -110,9 +117,24 @@ class TestSYS_assginOrder_to_flyuser(unittest.TestCase):
         #8.fsd updateorderstate //接单
         #确认接单
         time.sleep(1)
-        print(order_text)
+        #print(order_text)
         result=test_fsd_updateorderstate(ids,token,flyuser_phone,msg_id,ordernumber,updateorderdata,order_text)
-            
+
+        #9.orderboundquery
+        result=test_fsd_orderboundquery(ids,token,flyuser_phone,ordernumber)
+
+        #10.fsd submit order report
+        #等待timeout=10s,
+        time.sleep(10)
+        
+        print('------------this is your order info-------------------------')
+        print('------------------------------------------------------------')
+        print('ids,flyuser_phone,token,ordernumber,msg_id,submitorderdata,area')       
+        print(ids,flyuser_phone,token,ordernumber,msg_id,submitorderdata,area)
+        print('------------------------------------------------------------')
+        
+        result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,ordernumber,submitorderdata,area)
+                
             
     def tearDown(self):
             print('-------TEST END----------------- ')
