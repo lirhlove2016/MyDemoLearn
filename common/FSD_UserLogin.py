@@ -1225,15 +1225,12 @@ class FSDLogin(object):
 #------------YWB add order----------------------------------------
     def ywb_addorder(self,ids,token,phone,data):
         userdata={}
-        userdata=data
-        
-
+        userdata=data        
 
         headers = {
             'content-type': "application/x-www-form-urlencoded",
                 }
-        
-        
+               
         phone=str(phone)
         ids=str(ids)
         request_url = api.API_YWB_URL['addorder'].replace("id",ids).replace("TOKEN",token).replace("PHONE",phone)
@@ -1265,6 +1262,45 @@ class FSDLogin(object):
             print('Failed:ywb addorder failed')
             flag_ywb= 0
             return flag_ywb
+
+
+
+#------------MenDian ----------------------------------------
+    def mendian_getwxuserinfo(self,data):
+        userdata={}
+        userdata=data       
+
+        request_url = api.API_MD_URL['getwxuserinfo']
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        #print(ret)
+
+        if  res['errno']==0 or res['errno']!=13:
+
+            token=res['data']["token"]
+            userid=res['data']["accountId"]
+            print('Get the token is %s'%token)
+            print('Get the userid is %s'%userid)
+            
+            print('Passed: mendian getuserinfo  successed. ')
+            flag_md = 1
+            return flag_md,token,userid
+        else:
+            print('Failed:mendian getuserinfo failed')
+            flag_md= 0
+            return flag_md
+
+
+
 
 
 

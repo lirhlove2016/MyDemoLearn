@@ -17,17 +17,23 @@ import os
 from  data import Flyuser_testdata as flyuser
 from  data import System_Management_testdata as sysuser
 from  data import Ywb_testdata as ywbuser
+from  data import Mendian_testdata as mduser
 
 from common.FSD_UserLogin import FSDLogin
 
 my_obj = FSDLogin()
 
-#sys
+#ywb
 ywblogindata=ywbuser.testdata_YWB_login_userdata_001
 ywbsalesmanquerydata=ywbuser.testdata_YWB_salesmanquery_data_001
 ywb_phone=ywblogindata['phone']
 ywb_addorder_data=ywbuser.testdata_ywb_addorder_001
 #ywb_addorder_data=ywbuser.payload
+
+#mendian
+userinfodata=mduser.testdata_MD_getwxuser_data_001
+
+
 
 
 #case1--用户登录  
@@ -65,15 +71,28 @@ def test_ywb_addorder(userid,token,phone,data):
     else:
         print('error')
         return "error"
-
-
-    
+   
 #--------------------------------------------------------  
+def test_md_getwxuserinfo(data):
 
-    
+    #调用登录
+    ret=my_obj.mendian_getwxuserinfo(data)
+    if ret[0]!=0:
+        return ret
+    else:
+        print('error')
+        return "error"
+
+
+
+
+
+
+#--------------------------------------------------------     
 if __name__ == "__main__" :
     
     #data
+    '''
     #1.ywb login    
     datalist=test_ywb_login(ywblogindata)
     print(datalist)
@@ -88,6 +107,15 @@ if __name__ == "__main__" :
     #3add order
     #拜访人，不带药，不开发票
     result=test_ywb_addorder(userid,token,ywb_phone,ywb_addorder_data)
+    '''
+    #mendian getwxuserinfo
+    result=test_md_getwxuserinfo(userinfodata)
+    if result!='error':
+        userid=result[1]
+        token=result[0]
+    
+    
+    
 
     
 

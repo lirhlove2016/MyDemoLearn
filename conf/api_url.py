@@ -55,5 +55,9 @@ API_YWB_URL={
 
 }
 
+API_MD_URL={
+		"getwxuserinfo":"/wechatH5/api/tool/getWxUserInfo",
+}
+
 
 
