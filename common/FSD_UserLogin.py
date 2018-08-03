@@ -1293,8 +1293,8 @@ class FSDLogin(object):
 
             token=res['data']["token"]
             userid=res['data']["accountId"]
-            print('Get the token is %s'%token)
-            print('Get the userid is %s'%userid)
+            print('Get the MD token is %s'%token)
+            print('Get the MD userid is %s'%userid)
             
             print('Passed: mendian getuserinfo  successed. ')
             flag_md = 1
@@ -1304,7 +1304,42 @@ class FSDLogin(object):
             flag_md= 0
             return flag_md
 
+#------------MenDian ----------------------------------------
+    def mendian_addorder(self,token,userid,data):
+        userdata={}
+        userdata=data       
 
+        request_url = api.API_MD_URL['wxaddorder']
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_res_info(res)     
+        #print(ret)
+
+        if  res['errno']==0 or res['errno']!=13:
+
+            prepayid=res['data']["prePayId"]
+            groupmembercount=res['data']["groupMemberCount"]
+            preferentialList=res['data']['preferentialList']
+            print('Get the prepayid is %s'%prepayid)
+            print('Get the groupMemberCount is %s'%groupmembercount)
+            
+            print('Get the  preferentialList is %s'% preferentialList)
+            
+            print('Passed: mendian addorder  successed. ')
+            flag_md = 1
+            return flag_md,prepayid,groupmembercount, preferentialList
+        else:
+            print('Failed:mendian addorder failed')
+            flag_md= 0
+            return flag_md
 
 
 

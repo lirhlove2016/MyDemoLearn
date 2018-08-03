@@ -63,11 +63,18 @@ API_MD_URL={
 		"getcanuservoucherlist":"/wechatH5/api/voucher/getCanUseVoucherList",
 		"getfullareamsg":"/wechatH5/api/fullarea/getFullAreaMsg",
 		"getorderunitpricelist":"/wechatH5/api/order/getOrderUnitPriceList",
-		"getchoosevoucher":"/wechatH5/api/voucher/getChooseVoucherChangeMoney",
+		"getchoosevoucherchangemoney":"/wechatH5/api/voucher/getChooseVoucherChangeMoney",
 		"getbalance":"/wechatH5/api/wallet/getBalance",
 		"savecouponcode":"/wechatH5/api/voucher/saveCouponCode",
 		"getsmscheckcode":"/wechatH5/api/user/getSmsCheckCode",
-		"":"/wechatH5/api/wallet/orderPrePay",
+		"orderprepay":"/wechatH5/api/wallet/orderPrePay",
+		"orderinfo":"/wechatH5/api/order/getOrderInfo",
+		"getcroplist":"/wechatH5/api/order/getCropList",
+		"getcancelreason":"/wechatH5/api/order/getOrderCancelReason",
+		"cancelcenter":"/wechatH5/api/order/cancelOrderCenter",
+		"wxcancelorderdetail":"/wechatH5/api/order/wechatCancelOrderDetailFlow",
+		"getprovincelist":"/wechatH5/api/order/queryProvinceList",
+		
 		
 }
 
