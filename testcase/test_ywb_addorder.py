@@ -27,8 +27,6 @@ from common.FSD_UserLogin import FSDLogin
 
 my_obj = FSDLogin()
 
-my_obj = FSDLogin()
-
 '''
 数据部分  start
 ------------------

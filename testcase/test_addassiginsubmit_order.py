@@ -14,8 +14,7 @@ import os
 from common import HTMLTestRunner
 from  time  import sleep
 
-from modules.FSD_ReserveOrder_module import *
-from modules.SYS_FSD_submit_order import *
+from modules.test_addorder_submitorder import *
 
 from common.basic_http import * 
 
@@ -26,9 +25,8 @@ from  data import Flyuser_testdata as flyuser
 from  data import System_Management_testdata as sysuser
 
 from common.FSD_UserLogin import FSDLogin
-from  data import readtxt 
 
-from testcase.test_ywb_addorder import Test_addorder
+
 
 my_obj = FSDLogin()
 
@@ -48,7 +46,7 @@ flyuser_msgdata=flyuser.testdata_FSD_messege_data_001
 updateorderdata=flyuser.testdata_FSD_updateorderstate_001
 submitorderdata=flyuser.testdata_FSD_updateorderreport_001
 
-ordernumber=sysuser.testdata_001_query_ordernumber   #派单，接单订单编号
+#ordernumber=sysuser.testdata_001_query_ordernumber   #派单，接单订单编号
 flyuser_phone=sysuser.testdata_001_flyuser_phone
 area=sysuser.testdata_001_flyuser_submit_order_area
 
@@ -57,7 +55,8 @@ area=sysuser.testdata_001_flyuser_submit_order_area
 -----------
 '''
 
-class Test_addorder_assginOrder_submitorder(unittest.TestCase):
+class Test_add_assgin_submit_order(unittest.TestCase):
+    
     """flyuser take order and submit order"""
 	        
     def setUp(self):
@@ -67,14 +66,25 @@ class Test_addorder_assginOrder_submitorder(unittest.TestCase):
     def test_addorder_and_submitrder(self):
         """flyuser take order and submit order"""
 
-        ''''
-        #1.ywb addorder
-        ywblogin=Test_addorder()
-        order_number=ywblogin.test_ywb_add_order()
-        print(type(order_number))
+        #1.ywb login    
+        datalist=test_ywb_login(ywblogindata)
+        print(datalist)
+        userid=datalist[1]
+        token=datalist[0]
+        
+        print(userid,token)
 
-        '''
-        order_number="73781533228463687"
+        #2.ywb salesmanquery
+        result=test_ywb_salesmanquery(userid,token,ywbsalesmanquerydata,ywb_phone)
+
+        #3add order
+        #拜访人，不带药，不开发票
+        result=test_ywb_addorder(userid,token,ywb_phone,ywb_addorder_data)
+        if result!='error':
+            order_number=result                     
+        print('ywb add order-----------',order_number)
+
+        #order_number="73781533228463687"
         #2.sys assign order to flyuser
         #step1:sys login   
         result=test_sys_mangement_login(syslogindata)
@@ -97,12 +107,10 @@ class Test_addorder_assginOrder_submitorder(unittest.TestCase):
         print(flyuser_id)
         
         #step4:publish flyuser
-        print('order_number',type(order_number),order_number)
-        print('order_number----------------------\n',order_number)
-        print('--------------------------------------------------------\n')
+        #print('order_number',type(order_number),order_number)
+
         result=test_sys_publishorder(token,order_id,order_number,flyuser_id,assignflyuser)
 
-        '''
 
         #3.flyuser take order and submit workreport
         """flyuser take order"""		
@@ -141,24 +149,22 @@ class Test_addorder_assginOrder_submitorder(unittest.TestCase):
         print('------------this is your order info-------------------------')
         print('------------------------------------------------------------')
         print('ids,flyuser_phone,token,ordernumber,msg_id,submitorderdata,area')       
-        print(ids,flyuser_phone,token,ordernumber,msg_id,submitorderdata,area)
+        print(ids,flyuser_phone,token,order_number,msg_id,submitorderdata,area)
         print('------------------------------------------------------------')
         
         result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
     
 
-        '''
         
-        
-        
-        
-        
+
                                
     def tearDown(self):
             print('-------TEST END----------------- ')
 
 if __name__ == '__main__':
-    #unittest.main()  
+    unittest.main()  
+
+    '''
     # 1、构造用例集
     suite = unittest.TestSuite()
     # 2、执行顺序是安加载顺序：先执行test_sub，再执行test_add
@@ -168,6 +174,7 @@ if __name__ == '__main__':
     runner = unittest.TextTestRunner()
     # 4、执行测试
     runner.run(suite)
+    '''
 
     
     

@@ -20,6 +20,9 @@ from common.FSD_UserLogin import FSDLogin
 from modules.FSD_ReserveOrder_module import *
 from  data import readtxt 
 
+from  data import Ywb_testdata as ywbuser
+from  data import Mendian_testdata as mduser
+
 my_obj = FSDLogin()
 
 #sys
@@ -32,6 +35,15 @@ flyuserdata=flyuser.testdata_FSD_login_userdata_002
 flyuser_msgdata=flyuser.testdata_FSD_messege_data_001
 updateorderdata=flyuser.testdata_FSD_updateorderstate_001
 submitorderdata=flyuser.testdata_FSD_updateorderreport_001
+#ywb
+ywblogindata=ywbuser.testdata_YWB_login_userdata_001
+ywbsalesmanquerydata=ywbuser.testdata_YWB_salesmanquery_data_001
+ywb_phone=ywblogindata['phone']
+ywb_addorder_data=ywbuser.testdata_ywb_addorder_001
+#ywb_addorder_data=ywbuser.payload
+
+#mendian
+userinfodata=mduser.testdata_MD_getwxuser_data_001
 
 
 
@@ -73,7 +85,7 @@ def test_sys_queryassignflyuser(token,order_id,phone,data):
     
 #--------------------------------------------------------  
 #case4--sysMagement assignflyuser
-def test_sys_sys_publishorder(token,order_id,order_number,flyuser_id,data):   
+def test_sys_publishorder(token,order_id,order_number,flyuser_id,data):   
     ret=my_obj.sys_publishorder(token,order_id,order_number,flyuser_id,data)
     if ret!=1:
         print('error')
@@ -120,16 +132,79 @@ def test_fsd_orderboundquery(ids,token,phone,ordernumber):
         return "error"  
 
 
+
+
+#case1--YWB 用户登录  
+#--------------------------------------------------------      
+def test_ywb_login(data):
+
+    #调用登录
+    ret=my_obj.ywb_login(data)
+    if ret[0]!=0:
+        token=ret[2]
+        accountId=ret[1]
+
+        return token,accountId
+    else:
+        print('error')
+        return "error"
+
+#--------------------------------------------------------  
+#case2--salesmanquery
+def test_ywb_salesmanquery(userid,token,data,phone):   
+    ret=my_obj.ywb_salesmanquery(userid,token,data,phone)
+    if ret!=1:
+        print('error')
+        return "error"
+    else:
+        return ret
+
+
+#--------------------------------------------------------  
+#case3--addorder
+def test_ywb_addorder(userid,token,phone,data):   
+    ret=my_obj.ywb_addorder(userid,token,phone,data)
+    if ret[0]!=0:
+        token=ret[1]
+        
+        return token
+    else:
+        print('error')
+        return "error"
+
+
+
+
+
+
 #--------------------------------------------------------  
     
 if __name__ == "__main__" :
     
     #data
-    order_number=str(14991533223323128)  #派单，接单订单编号
+
+    order_number=str(52941533266382634)  #派单，接单订单编号
     flyuser_phone='18301212965'   #派单飞手，接单飞手
     area=300   #actual a   #飞手提交作业亩数
+    '''
+    #1.ywb login    
+    datalist=test_ywb_login(ywblogindata)
+    print(datalist)
+    userid=datalist[1]
+    token=datalist[0]
+    
+    print(userid,token)
 
+    #2.ywb salesmanquery
+    result=test_ywb_salesmanquery(userid,token,ywbsalesmanquerydata,ywb_phone)
 
+    #3add order
+    #拜访人，不带药，不开发票
+    result=test_ywb_addorder(userid,token,ywb_phone,ywb_addorder_data)
+    if result!='error':
+        order_number=result
+
+    '''
     #sys assign order
     #------------------------sys
     #step1:sys login   
@@ -156,8 +231,8 @@ if __name__ == "__main__" :
     #step4:publish flyuser
     print('flyuserid type',type(flyuser_id),flyuser_id)
 
-    result=test_sys_sys_publishorder(token,order_id,order_number,flyuser_id,assignflyuser)
-
+    result=test_sys_publishorder(token,order_id,order_number,flyuser_id,assignflyuser)
+     
     #fsd  take order
     #--------------------------------------
     #5.fsd login
@@ -179,6 +254,7 @@ if __name__ == "__main__" :
         msg_id=result[0]
         order_text=result[1]
 
+    print('ordernumber-----------',order_number)
     #7.fsd orderprompt
     #点击接单的弹窗
     time.sleep(5)
@@ -197,6 +273,8 @@ if __name__ == "__main__" :
 
     #10提交作业报告
     time.sleep(10)
+
+	
     '''
     #read data from txt file
     print('flyuser already take the order,now start submit the workresult..........\n')
@@ -225,7 +303,7 @@ if __name__ == "__main__" :
     
     #10.提交
     result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
-    
+
     
     
     

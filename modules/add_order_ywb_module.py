@@ -44,7 +44,7 @@ userinfodata=mduser.testdata_MD_getwxuser_data_001
 
 
 
-#case1--YWB 用户登录  
+#case1--用户登录  
 #--------------------------------------------------------      
 def test_ywb_login(data):
 
@@ -72,8 +72,9 @@ def test_ywb_salesmanquery(userid,token,data,phone):
 def test_ywb_addorder(userid,token,phone,data):   
     ret=my_obj.ywb_addorder(userid,token,phone,data)
     if ret[0]!=0:
-        order_number=ret[1]       
-        return order_number
+        token=ret[1]
+        
+        return token
     else:
         print('error')
         return "error"

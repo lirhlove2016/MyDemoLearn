@@ -94,7 +94,7 @@ class FSDLogin(object):
         print("response ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_management(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         print(ret)
         
         #返回值不报错时
@@ -929,12 +929,12 @@ class FSDLogin(object):
         # 解析response返回信息
         
         if err_flag:
-            print('Passed:sys  assign flyuser  successed')
+            print('Passed:sys  publishorder  successed')
       
             flag_status=1
             return flag_status
         else:
-            print('Failed:sys  assign flyuser failed')
+            print('Failed:sys  publishorder failed')
             flag_status=0
             return flag_status
 
@@ -957,7 +957,7 @@ class FSDLogin(object):
         #print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
         if  res['errno']==0:
@@ -994,10 +994,10 @@ class FSDLogin(object):
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
-        if  res['errorCode']==0:
+        if  '操作成功' in res['info']:
             print('Passed: fsd orderPromptQuery successed. ')
             flag_fsd = 1
             return flag_fsd
@@ -1031,7 +1031,7 @@ class FSDLogin(object):
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
         if  res['errorCode']==0:
@@ -1079,7 +1079,7 @@ class FSDLogin(object):
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
         if  '操作成功' in res['info'] or res['errorCode']==0:
@@ -1113,7 +1113,7 @@ class FSDLogin(object):
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
         if  res['errno']==0 or res['errno']!=13:
@@ -1144,7 +1144,7 @@ class FSDLogin(object):
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
         if  res['errorCode']==0 or res['errno']!=13:
@@ -1174,7 +1174,7 @@ class FSDLogin(object):
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
         if  res['errorCode']==0 or res['errno']!=13:
@@ -1211,7 +1211,7 @@ class FSDLogin(object):
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
 
@@ -1286,7 +1286,7 @@ class FSDLogin(object):
         print("response: ",res)
 
         #解析response返回信息
-        err_flag,ret=my_request.decode_errorinfo_from_FSD(res)     
+        err_flag,ret=my_request.decode_res_info(res)     
         #print(ret)
 
         if  res['errno']==0 or res['errno']!=13:
