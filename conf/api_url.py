@@ -52,11 +52,23 @@ API_YWB_URL={
 	"salesmanquery":"/businessTreasure/api/user/salesmanQuery?access_phone=PHONE&userId=id&token=TOKEN",
 	"cropsAllQuery":"/businessTreasure/api/tool/cropsAllQuery?access_phone=PHONE&userId=id&token=TOKEN",
 	"addorder":"/businessTreasure/api/order/addOrderQuery?access_phone=PHONE&userId=id&token=TOKEN",
+	
 
 }
 
 API_MD_URL={
 		"getwxuserinfo":"/wechatH5/api/tool/getWxUserInfo",
+		"getframlist":"/wechatH5/api/farmer/getFarmerList",
+		"wxaddorder":"/wechatH5/api/order/addOrder",
+		"getcanuservoucherlist":"/wechatH5/api/voucher/getCanUseVoucherList",
+		"getfullareamsg":"/wechatH5/api/fullarea/getFullAreaMsg",
+		"getorderunitpricelist":"/wechatH5/api/order/getOrderUnitPriceList",
+		"getchoosevoucher":"/wechatH5/api/voucher/getChooseVoucherChangeMoney",
+		"getbalance":"/wechatH5/api/wallet/getBalance",
+		"savecouponcode":"/wechatH5/api/voucher/saveCouponCode",
+		"getsmscheckcode":"/wechatH5/api/user/getSmsCheckCode",
+		"":"/wechatH5/api/wallet/orderPrePay",
+		
 }
 
 

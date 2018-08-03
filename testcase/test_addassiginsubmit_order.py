@@ -65,7 +65,22 @@ class Test_add_assgin_submit_order(unittest.TestCase):
     #1,YWB addorder and assignorder
     def test_addorder_and_submitrder(self):
         """flyuser take order and submit order"""
+		formal_type=formaltypelist['normal']  #ywb正式订单
+		#formal_type=formaltypelist['yanshi']   #ywb演示订单
+		#formal_type=formaltypelist['test']   #ywb测试订单
+		#formal_type=formaltypelist['longreserve']   #ywb长预约订单
 
+		#print('formal-------------',formal_type)
+		#print(ywb_addorder_data['formalType'])
+		if 	formal_type=='1':
+			print('正在下单，业务宝-正式订单......')
+		elif formal_type=='2':
+			print('正在下单，业务宝-演示订单......')
+		elif formal_type=='3':
+			print('正在下单，业务宝-测试订单......')
+		elif formal_type=='4':
+			print('正在下单，业务宝-长预约订单......')
+				
         #1.ywb login    
         datalist=test_ywb_login(ywblogindata)
         print(datalist)

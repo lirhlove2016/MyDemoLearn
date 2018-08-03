@@ -113,6 +113,21 @@ testdata_sys_assign_flyuser_001={
             "planeNum":"0",
             "isAll":"1",
 		}
+#---------------------------------sys  联合作业派单 ----------------------------------------
+testdata_sys_addjoinoperation_flyuser_001={
+            "orderNumber":72601532947245724,
+            "extractingPercentage":2.7,
+            "subsidyPercentage":1,
+            "userIdList":2187,
+			"heroPostLabel":"英雄帖标题",
+			"heroPostAbstract":"英雄帖摘要",
+			"heroPostPicUrl": "http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/3f40dbdc-b18e-4346-8193-10e7cd3d04b6.png",
+			"remark":"备注",
+            "inquiryType":0,
+			"stipulateWorkTime":"2018-08-01",
+			"stipulateWorkDays":4,
+		}
+		
 # ------------------------------ case: system asgin order and flyuser submit order----------------------
 testdata_001_query_ordernumber="55891533227302876"
 testdata_001_flyuser_phone='18301212965'

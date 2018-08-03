@@ -42,6 +42,8 @@ ywb_phone=ywblogindata['phone']
 ywb_addorder_data=ywbuser.testdata_ywb_addorder_001
 #ywb_addorder_data=ywbuser.payload
 
+formaltypelist=ywbuser.ywb_formalType_list
+
 #mendian
 userinfodata=mduser.testdata_MD_getwxuser_data_001
 
@@ -173,6 +175,16 @@ def test_ywb_addorder(userid,token,phone,data):
         return "error"
 
 
+#--------------------------------------------------------  
+def test_md_getwxuserinfo(data):
+
+    #调用登录
+    ret=my_obj.mendian_getwxuserinfo(data)
+    if ret[0]!=0:
+        return ret
+    else:
+        print('error')
+        return "error"
 
 
 
@@ -183,10 +195,29 @@ if __name__ == "__main__" :
     
     #data
 
-    order_number=str(52941533266382634)  #派单，接单订单编号
+    #order_number=str(52941533266382634)  #派单，接单订单编号
     flyuser_phone='18301212965'   #派单飞手，接单飞手
     area=300   #actual a   #飞手提交作业亩数
-    '''
+   
+    
+    formal_type=formaltypelist['normal']  #ywb正式订单
+    #formal_type=formaltypelist['yanshi']   #ywb演示订单
+    #formal_type=formaltypelist['test']   #ywb测试订单
+    #formal_type=formaltypelist['longreserve']   #ywb长预约订单
+
+    print('formal-------------',formal_type)
+    print(ywb_addorder_data['formalType'])
+    
+    ywb_addorder_data['formalType']=formal_type
+    if 	formal_type=='1':
+	    print('正在下单，业务宝-正式订单......')
+    elif formal_type=='2':
+	    print('正在下单，业务宝-演示订单......')
+    elif formal_type=='3':
+	    print('正在下单，业务宝-测试订单......')
+    elif formal_type=='4':
+	    print('正在下单，业务宝-长预约订单......')
+    
     #1.ywb login    
     datalist=test_ywb_login(ywblogindata)
     print(datalist)
@@ -203,6 +234,11 @@ if __name__ == "__main__" :
     result=test_ywb_addorder(userid,token,ywb_phone,ywb_addorder_data)
     if result!='error':
         order_number=result
+
+
+    
+
+    
 
     '''
     #sys assign order
@@ -273,7 +309,7 @@ if __name__ == "__main__" :
 
     #10提交作业报告
     time.sleep(10)
-
+    '''
 	
     '''
     #read data from txt file
@@ -302,7 +338,7 @@ if __name__ == "__main__" :
     '''
     
     #10.提交
-    result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
+    #result=test_fsd_submitorder(ids,token,flyuser_phone,msg_id,order_number,submitorderdata,area)
 
     
     
