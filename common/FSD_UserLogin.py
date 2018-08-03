@@ -1270,10 +1270,11 @@ class FSDLogin(object):
 
 
 
-#------------MenDian ----------------------------------------
-    def mendian_getwxuserinfo(self,data):
+#1------------MenDian ----------------------------------------
+    def mendian_getwxuserinfo(self,data,openid):
         userdata={}
-        userdata=data       
+        userdata=data
+        userdata['openid']=openid
 
         request_url = api.API_MD_URL['getwxuserinfo']
         print('Test data and api url |',userdata,'| ',request_url)
@@ -1304,10 +1305,14 @@ class FSDLogin(object):
             flag_md= 0
             return flag_md
 
-#------------MenDian ----------------------------------------
+#2------------MenDian ----------------------------------------
     def mendian_addorder(self,token,userid,data):
         userdata={}
-        userdata=data       
+        userdata=data
+        userdata['token']=token
+        userdata['userid']=userid
+        userdata['userId']=userid
+        
 
         request_url = api.API_MD_URL['wxaddorder']
         print('Test data and api url |',userdata,'| ',request_url)
@@ -1324,27 +1329,180 @@ class FSDLogin(object):
         #print(ret)
 
         if  res['errno']==0 or res['errno']!=13:
-
             prepayid=res['data']["prePayId"]
             groupmembercount=res['data']["groupMemberCount"]
-            preferentialList=res['data']['preferentialList']
+            preferentlist=res['data']['preferentialList']
             print('Get the prepayid is %s'%prepayid)
-            print('Get the groupMemberCount is %s'%groupmembercount)
-            
-            print('Get the  preferentialList is %s'% preferentialList)
+            print('Get the groupMemberCount is %s'%groupmembercount)           
+            print('Get the  preferentialList is %s'% preferentlist)
             
             print('Passed: mendian addorder  successed. ')
             flag_md = 1
-            return flag_md,prepayid,groupmembercount, preferentialList
+            return flag_md,prepayid,groupmembercount,preferentlist
         else:
             print('Failed:mendian addorder failed')
             flag_md= 0
             return flag_md
 
+#3------------MenDian ----------------------------------------
+    def mendian_getcanuservoucher(self,token,userid,prepayid,pretotalprice,prepaypercent,data):
+        userdata={}
+        userdata=data
+        userdata['token']=token
+        userdata['userid']=userid
+        userdata['userId']=userid
+        userdata['prePayId']=prepayid
+        userdata['preTotalPrice']=pretotalprice
+        userdata['prePayPercent']=prepaypercent
+        
+        request_url = api.API_MD_URL['getcanuservoucherlist']
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        #print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_res_info(res)     
+        #print(ret)
+
+        if  res['errno']==0 or res['errno']!=13:
+            vouchlist=res['data']["voucherList"]
+           
+            print('Get the voucherList ')
+            
+            print('Passed: mendian getcanuservoucher  successed. ')
+            flag_md = 1
+            return flag_md,vouchlist
+        else:
+            print('Failed:mendian getcanuservoucher  failed')
+            flag_md= 0
+            return flag_md
 
 
+#4------------MenDian ----------------------------------------
+    def mendian_getfullareamsg(self,token,userid,prepayid,data):
+        userdata={}
+        userdata=data
+        userdata['token']=token
+        userdata['userid']=userid
+        userdata['userId']=userid
+        userdata['prePayId']=prepayid
 
         
+        request_url = api.API_MD_URL['getfullareamsg']
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_res_info(res)     
+        #print(ret)
+
+        if  res['errno']==0 or res['errno']!=13:
+            fullareastate=res['data']["fullAreaState"]
+            fullareamsg=res['data']["fullAreaMsg"]
+           
+            print('Get the fullareastate is %s'%fullareastate)
+            print('Get the fullareamsg is %s'%fullareamsg)
+            
+            print('Passed: mendian getfullarea  successed. ')
+            flag_md = 1
+            return flag_md,fullareastate,fullareamsg
+        
+        else:
+            print('Failed:mendian getfullarea  failed')
+            flag_md= 0
+            return flag_md
+
+ #5------------MenDian ----------------------------------------
+    def mendian_getbalance(self,token,userid,data):
+        userdata={}
+        userdata=data
+        userdata['token']=token
+        userdata['userid']=userid
+        userdata['userId']=userid
+        
+        request_url = api.API_MD_URL['getbalance']
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_res_info(res)     
+        #print(ret)
+
+        if  res['errno']==0 or res['errno']!=13:
+            amount=res['data']["amount"]
+           
+            print('Get the amount is %s'%amount)
+            
+            print('Passed: mendian getbalance  successed. ')
+            flag_md = 1
+            return flag_md,amount
+        
+        else:
+            print('Failed:mendian getbalance  failed')
+            flag_md= 0
+            return flag_md
+
+ #6------------MenDian ----------------------------------------
+    def mendian_orderprepay(self,token,userid,prepayid,pretotalprice,prepaypercent,chekcode,openid,data):
+        userdata={}
+        userdata=data
+        userdata['token']=token
+        userdata['userid']=userid
+        userdata['userId']=userid
+        userdata['prePayId']=prepayid
+        userdata['preTotalPrice']=pretotalprice
+        userdata['prePayPercent']=prepaypercent
+        userdata['openid']=openid
+        userdata['checkCode']=chekcode
+        
+        
+        request_url = api.API_MD_URL['orderprepay']
+        print('Test data and api url |',userdata,'| ',request_url)
+
+        # 发送post请求
+        my_request = MyRequest(request_url,userdata)
+        res = my_request.request_post()
+        
+        res=res.json()
+        print("response: ",res)
+
+        #解析response返回信息
+        err_flag,ret=my_request.decode_res_info(res)     
+        #print(ret)
+
+        if  res['errno']==0 or res['errno']!=13:
+            order_number=res['data']["orderNumber"]
+           
+            print('Get the order_number is %s'%order_number)
+            print('Passed: mendian addorderpay  successed. ')
+            flag_md = 1
+            return flag_md,order_number
+        
+        else:
+            print('Failed:mendian addorderpay  failed')
+            flag_md= 0
+            return flag_md
+
+
+
+       
 #-----------------------------------------
         
 if __name__ == "__main__" :

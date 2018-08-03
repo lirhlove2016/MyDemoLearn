@@ -39,7 +39,13 @@ ywb_addorder_data=ywbuser.testdata_ywb_addorder_001
 #ywb_addorder_data=ywbuser.payload
 
 #mendian
+openid=mduser.testdata_mendian_login_openid[0]
 userinfodata=mduser.testdata_MD_getwxuser_data_001
+mdaddorderdata=mduser.testdata_md_addorder_001
+getvoucherdata=mduser.testdata_md_getcanuservoucher_001
+getfullareamsg=mduser.testdata_md_getfullareamsg_001
+getbalancedata=mduser.testdata_md_getbalance_001
+orderprepaydata=mduser.testdata_md_orderprepay_001
 
 
 '''
@@ -86,15 +92,48 @@ class Test_addorder(unittest.TestCase):
         """mend add order"""
 
         #1.mendian getwxuserinfo
-        ret=my_obj.mendian_getwxuserinfo(userinfodata)
+        ret=my_obj.mendian_getwxuserinfo(userinfodata,openid)
         if ret[0]==1:
-            userid=ret[1]
-            token=ret[0]
-
+            userid=ret[2]
+            token=ret[1]
         else:
             print('error')
+        #2.mendian addorder
+        
+        ret=my_obj.mendian_addorder(token,userid,mdaddorderdata)
+        if ret[0]==1:
+            prepayid=ret[1]
+            groupmembercount=ret[2]
+            preferentlist=ret[3]
+            
+        #3.mendian getcanuservoucher        
+        pretotalprice=preferentlist[groupmembercount-1]['showMoney']
+        prepaypercent=preferentlist[groupmembercount-1]['prePayPercent']
 
-
+        ret=my_obj.mendian_getcanuservoucher(token,userid,prepayid,pretotalprice,prepaypercent,getvoucherdata)
+        if ret[0]==1:
+            vouchlist=ret[1]
+        vouponcode=vouchlist[0]['couponCode']
+        
+        #4.mendian getfullareamsg     
+        ret=my_obj.mendian_getfullareamsg(token,userid,prepayid,getfullareamsg)
+        if ret[0]==1:
+            fullareastate=ret[1]
+            fullareamsg=ret[2]
+        
+        #5.mendian getbalance
+        ret=my_obj.mendian_getbalance(token,userid,getbalancedata)
+        if ret[0]==1:
+            amount=ret[1]
+                    
+    
+        #6.mendian orderprepay
+        orderprepaydata
+        chekcode='1234'
+        ret=my_obj.mendian_orderprepay(token,userid,prepayid,pretotalprice,prepaypercent,chekcode,openid,orderprepaydata)
+        if ret[0]==1:
+            order_number=ret[1]
+        return order_number
         
         
     def tearDown(self):
@@ -105,8 +144,8 @@ if __name__ == '__main__':
     
     suite = unittest.TestSuite()
     #suite.addTest(TestOne("test_add"))
-    suite.addTest(Test_addorder("test_ywb_add_order"))
-    #suite.addTest(Test_addorder("test_md_add_order"))
+    #suite.addTest(Test_addorder("test_ywb_add_order"))
+    suite.addTest(Test_addorder("test_md_add_order"))
 
     runner = unittest.TextTestRunner()
     runner.run(suite)

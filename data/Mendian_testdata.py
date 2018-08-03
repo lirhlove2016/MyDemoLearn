@@ -2,7 +2,7 @@
 
 # ------------------------------ case:  account----------------------
 
-testdata_mendian_login_openid="o3_xvw0SFrwEPxeQfpAtjjXNHztA"
+testdata_mendian_login_openid=["o3_xvw0SFrwEPxeQfpAtjjXNHztA"]
 # ------------------------------ case: ----------------------
 
 testdata_YWB_salesmanquery_data_001= {
@@ -29,8 +29,8 @@ testdata_MD_getfarmlist_data_001={
 }
 # 3------------------------------ case: ----------------------
 testdata_md_addorder_001={
-		"userid":200001878,
-		"userId":200001878,
+		"userid":"200001878",
+		"userId":"200001878",
 		"token":"0790e27454bf4eac92f2e84120d7a89c",
 		"access_phone":"",
 		"cropName":"中稻",
@@ -46,11 +46,11 @@ testdata_md_addorder_001={
 		"countyName":"朝阳区",
 		"countyCode":"110105",
 		"detailAddress":"望京东园523号楼融科望京中心",
-		"farmerId":20000671,
+		"farmerId":"20000671",
 		"guideName":"小李子",
-		"guidePhone":18301212965,
-		"longitude":116.483466,
-		"latitude":39.998004,
+		"guidePhone":"18301212965",
+		"longitude":"116.483466",
+		"latitude":"39.998004",
 		"orderNote":"门店下单",
 		"plantsSmallUrl":"http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/zhongdao.png",
 		"plantsLargeUrl":"http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/zhongdao1.png",
@@ -60,8 +60,10 @@ testdata_md_addorder_001={
 		"crops_highly":"1.5米及其以下",
 		"cropType":1,
 		"pricingType":1,
-		"orderExt":	'{"ordinaryExtracting":0.30,"cashSubsidyExtracting":1.0000,"flyPrice":8.55,"customerOrdinaryExtracting":0.1000,"flyPricingSwitch":1}',
+		"orderExt":'{"ordinaryExtracting":0.30,"cashSubsidyExtracting":1.0000,"flyPrice":8.55,"customerOrdinaryExtracting":0.1000,"flyPricingSwitch":1}',
+		"workProvinceCode":"110000",
 }
+
 #4--------------------------------------------
 testdata_md_getcanuservoucher_001={
 		"userid":200001878,
@@ -155,17 +157,17 @@ testdata_md_savevoucher_001={
 }
 
 #--------------------------------------------
-testdata_md_prepay_001={
+testdata_md_orderprepay_001={
 		"userid":200001878,
 		"userId":200001878,
-		"token":"0790e27454bf4eac92f2e84120d7a89c",
+		"token":"b6ea1252c777407cb4327968be4153f1",
 		"access_phone":"",
-		"prePayId":6570,
-		"prePayPercent":1,
-		"checkCode":1234,
+		"prePayId":6608,
+		"prepayPercent":1,
+		"checkCode":2888,
 		"openid":"o3_xvw0SFrwEPxeQfpAtjjXNHztA",
 		"preTotalPrice":1440,
-	
+			
 }
 #--------------------------------------------
 testdata_md_orderinfo_001={

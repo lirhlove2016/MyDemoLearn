@@ -13,7 +13,9 @@ from conf.conf import *
 from testcase import test_one_case_demo as test_fsd
 from testcase import test_FSD_submit_order_readtxt as test_fsd_suborder
 from testcase import test_SYS_assign_order_to_flyuser as test_sys_assignorder
-from testcase import test_ywb_addorder as test_addorder
+
+from testcase import test_ywb_md_addorder as test_addorder
+
 from testcase import test_addassiginsubmit_order as test_addorder_takeorder
 
 #设置report_path
@@ -38,13 +40,17 @@ suite = unittest.TestSuite()
 #接单+提交作业报告
 #suite.addTest(test_sys_assignorder.Test_addorder_assginOrder_submitorder('test_fsd_take_order_and_submit_order'))
 
-#ywb下单 派单，接单，提交报告
-suite.addTest(test_addorder_takeorder.Test_add_assgin_submit_order('test_addorder_and_submitrder'))
-
-
-
-#提交作业报告（无协同）
+#提交作业报告,批量文件（无协同）
 #suite.addTest(test_fsd_suborder.TestFSD_SubmitOrder('test_FSD_submit_order_readtxt'))
+
+
+#ywb下单 派单，接单，提交报告
+#suite.addTest(test_addorder_takeorder.Test_add_assgin_submit_order('test_ywb_addorder_and_submitrder'))
+
+#mendian下单 派单，接单，提交报告
+suite.addTest(test_addorder_takeorder.Test_add_assgin_submit_order('test_mendian_addorder_and_submit'))
+
+
 
 
 if __name__=='__main__':

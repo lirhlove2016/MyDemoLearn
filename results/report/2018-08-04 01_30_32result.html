@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>测试报告 测试环境</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.4"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+<style type="text/css" media="screen">
+body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
+table       { font-size: 100%; }
+pre         {word-wrap:break-word;word-break:break_all;overflow:auto; }#处理报告中错误结果溢出表格
+
+/* -- heading ---------------------------------------------------------------------- */
+h1 {
+    font-size: 16pt;
+    color: gray;
+}
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+
+.heading .attribute {
+    margin-top: 1ex;
+    margin-bottom: 0;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- css div popup ------------------------------------------------------------------------ */
+a.popup_link {
+}
+
+a.popup_link:hover {
+    color: red;
+}
+.img{
+        text-align: center;
+        margin:0 auto;
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+        border: 1px solid #777;
+}
+
+.screenshots {
+    position:absolute;
+    left: 20%;
+    top: 20%;
+    display: none;
+}
+.close_shots {
+    position:absolute;
+    top:0; left:98%;
+    z-index:99;
+    width:20px;
+    cursor:pointer;
+}
+.popup_window {
+    display: none;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    /*border: solid #627173 1px; */
+    padding: 10px;
+    background-color: #E6E6D6;
+    font-family: "Lucida Console", "Courier New", Courier, monospace;
+    text-align: left;
+    font-size: 8pt;
+    width: 500px;
+}
+
+}
+/* -- report ------------------------------------------------------------------------ */
+#show_detail_line {
+    margin-top: 3ex;
+    margin-bottom: 1ex;
+}
+#result_table {
+    width: 80%;
+    border-collapse: collapse;
+    border: 1px solid #777;
+}
+#header_row {
+    font-weight: bold;
+    color: white;
+    background-color: #777;
+}
+#result_table td {
+    border: 1px solid #777;
+    padding: 2px;
+}
+#total_row  { font-weight: bold; }
+.passClass  { background-color: #6c6; }
+.failClass  { background-color: #c60; }
+.errorClass { background-color: #c00; }
+.passCase   { color: #6c6; }
+.failCase   { color: #c60; font-weight: bold; }
+.errorCase  { color: #c00; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+
+
+/* -- ending ---------------------------------------------------------------------- */
+#ending {
+}
+
+
+.piechart{
+    position:absolute;  ;
+    top:20px;
+    left:300px;
+    width: 200px;
+    float: left;
+    display:  inline;
+}
+
+
+</style>
+
+</head>
+<body>
+<script language="javascript" type="text/javascript">
+output_list = Array();
+
+/* level - 0:Summary; 1:Failed; 2:All */
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level < 1) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level > 1) {
+                tr.className = '';
+            }
+            else {
+                tr.className = 'hiddenRow';
+            }
+        }
+    }
+}
+
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        tid0 = 't' + cid.substr(1) + '.' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        if (toHide) {
+            document.getElementById('div_'+tid).style.display = 'none'
+            document.getElementById(tid).className = 'hiddenRow';
+        }
+        else {
+            document.getElementById(tid).className = '';
+        }
+    }
+}
+
+
+function showTestDetail(div_id){
+    var details_div = document.getElementById(div_id)
+    var displayState = details_div.style.display
+    // alert(displayState)
+    if (displayState != 'block' ) {
+        displayState = 'block'
+        details_div.style.display = 'block'
+    }
+    else {
+        details_div.style.display = 'none'
+    }
+}
+
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&');
+    s = s.replace(/</g,'<');
+    s = s.replace(/>/g,'>');
+    return s;
+}
+
+function drawCircle(pass, fail, error){
+    var color = ["#6c6","#c60","#c00"];
+    var data = [pass,fail,error];
+    var text_arr = ["pass", "fail", "error"];
+
+    var canvas = document.getElementById("circle");
+    var ctx = canvas.getContext("2d");
+    var startPoint=0;
+    var width = 20, height = 10;
+    var posX = 112 * 2 + 20, posY = 30;
+    var textX = posX + width + 5, textY = posY + 10;
+    for(var i=0;i<data.length;i++){
+        ctx.fillStyle = color[i];
+        ctx.beginPath();
+        ctx.moveTo(112,84);
+        ctx.arc(112,84,84,startPoint,startPoint+Math.PI*2*(data[i]/(data[0]+data[1]+data[2])),false);
+        ctx.fill();
+        startPoint += Math.PI*2*(data[i]/(data[0]+data[1]+data[2]));
+        ctx.fillStyle = color[i];
+        ctx.fillRect(posX, posY + 20 * i, width, height);
+        ctx.moveTo(posX, posY + 20 * i);
+        ctx.font = 'bold 14px';
+        ctx.fillStyle = color[i];
+        var percent = text_arr[i] + ":"+data[i];
+        ctx.fillText(percent, textX, textY + 20 * i);
+
+    }
+}
+
+function show_shots(obj) {
+    obj.nextElementSibling.style.display="block";
+
+}
+
+function close_shots(obj) {
+    obj.parentElement.style.display="none";
+}
+
+</script>
+<div class="piechart">
+    <div>
+        <canvas id="circle" width="350" height="168" </canvas>
+    </div>
+</div>
+<div class='heading'>
+<h1>测试报告 测试环境</h1>
+<p class='attribute'><strong>开始时间:</strong> 2018-08-04 01:30:33</p>
+<p class='attribute'><strong>耗时:</strong> 0:00:30.974044</p>
+<p class='attribute'><strong>状态:</strong> 通过 1</p>
+
+<p class='description'>用例的执行情况</p>
+</div>
+
+
+
+<p id='show_detail_line'>显示
+<a href='javascript:showCase(0)'>概要</a>
+<a href='javascript:showCase(1)'>失败</a>
+<a href='javascript:showCase(2)'>所有</a>
+</p>
+
+<table id='result_table'>
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row'>
+    <td>测试组/测试用例</td>
+    <td>总数</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>视图</td>
+    <td>错误截图</td>
+</tr>
+
+<tr class='passClass'>
+    <td>testcase.test_addassiginsubmit_order.Test_add_assgin_submit_order</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c1',1)">详情</a></td>
+    <td> </td>
+</tr>
+
+<tr id='pt1.1'>
+    <td class='none'><div class='testcase'>test_mendian_addorder_and_submit: mendian addorder to submit</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
+        通过</a>
+
+    <div id='div_pt1.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.1: ---------TEST START-------------
+Test data and api url | {'access_phone': '', 'token': 'eef9590907e34a44a41fc73a1e83ac48', 'userId': 200001878, 'userid': 200001878, 'openid': 'o3_xvw0SFrwEPxeQfpAtjjXNHztA'} |  /wechatH5/api/tool/getWxUserInfo
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /wechatH5/api/tool/getWxUserInfo
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'access_phone': '', 'token': 'eef9590907e34a44a41fc73a1e83ac48', 'userId': 200001878, 'userid': 200001878, 'openid': 'o3_xvw0SFrwEPxeQfpAtjjXNHztA'}
+response:  {'data': {'phone': '18301212965', 'cityName': '天津市', 'salesmanName': 'li_test001', 'userName': '小李子', 'countyCode': '120105', 'authState': 1, 'provinceCode': '120000', 'salesmanPhone': 18301212965, 'activityFlag': 1, 'provinceName': '天津市', 'headUrl': '', 'longitude': '117.210061', 'cityCode': '120100', 'userRole': 1, 'latitude': '39.135884', 'token': '18c6424b7ba24a4483d32de0151a038a', 'storeId': 10000497, 'detailAddress': '新纬路1号天津站', 'accountId': '200001878', 'countyName': '河北区', 'vipFlag': 0, 'openid': 'o3_xvw0SFrwEPxeQfpAtjjXNHztA'}, 'errno': 0}
+errorno = 0
+Get the MD token is 18c6424b7ba24a4483d32de0151a038a
+Get the MD userid is 200001878
+Passed: mendian getuserinfo  successed. 
+Test data and api url | {'plantsLargeUrl': 'http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/zhongdao1.png', 'cropId': 2, 'countyCode': '110105', 'unitPrice': 8.9, 'plantsSmallUrl': 'http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/zhongdao.png', 'cityName': '北京市', 'drugType': '0,1,2,6', 'guidePhone': '18301212965', 'plantsMessageUrl': 'http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/zhongdao2.png', 'workProvinceCode': '110000', 'cropName': '中稻', 'provinceCode': '110000', 'crops_highly': '1.5米及其以下', 'access_phone': '', 'guideName': '小李子', 'startDate': '2018-08-05', 'longitude': '116.483466', 'countyName': '朝阳区', 'orderArea': 200, 'flyUserType': 5, 'cityCode': '110100', 'farmerId': '20000671', 'orderNote': '门店下单', 'latitude': '39.998004', 'cropType': 1, 'token': '18c6424b7ba24a4483d32de0151a038a', 'pricingType': 1, 'provinceName': '北京市', 'detailAddress': '望京东园523号楼融科望京中心', 'orderExt': '{"ordinaryExtracting":0.30,"cashSubsidyExtracting":1.0000,"flyPrice":8.55,"customerOrdinaryExtracting":0.1000,"flyPricingSwitch":1}', 'days': 1, 'userId': '200001878', 'userid': '200001878'} |  /wechatH5/api/order/addOrder
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /wechatH5/api/order/addOrder
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'plantsLargeUrl': 'http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/zhongdao1.png', 'cropId': 2, 'countyCode': '110105', 'unitPrice': 8.9, 'plantsSmallUrl': 'http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/zhongdao.png', 'cityName': '北京市', 'drugType': '0,1,2,6', 'guidePhone': '18301212965', 'plantsMessageUrl': 'http://farmlandbuckets.oss-cn-beijing.aliyuncs.com/zhongdao2.png', 'workProvinceCode': '110000', 'cropName': '中稻', 'provinceCode': '110000', 'crops_highly': '1.5米及其以下', 'access_phone': '', 'guideName': '小李子', 'startDate': '2018-08-05', 'longitude': '116.483466', 'countyName': '朝阳区', 'orderArea': 200, 'flyUserType': 5, 'cityCode': '110100', 'farmerId': '20000671', 'orderNote': '门店下单', 'latitude': '39.998004', 'cropType': 1, 'token': '18c6424b7ba24a4483d32de0151a038a', 'pricingType': 1, 'provinceName': '北京市', 'detailAddress': '望京东园523号楼融科望京中心', 'orderExt': '{"ordinaryExtracting":0.30,"cashSubsidyExtracting":1.0000,"flyPrice":8.55,"customerOrdinaryExtracting":0.1000,"flyPricingSwitch":1}', 'days': 1, 'userId': '200001878', 'userid': '200001878'}
+response:  {'data': {'preTotalPrice': 1762.2, 'prePayPercent': 0.99, 'groupMemberCount': 2, 'groupTurnOff': 1, 'totalPrice': '1780.00', 'preferentialList': [{'discountPercent': 0.2, 'prePayPercent': 0.99, 'showMoney': 1405.8, 'preferentialMoeny': 356.4, 'groupDiscountPercent': 0.2, 'groupPreferentialMoney': 356.4, 'prePayMoeny': 1762.2, 'orderDiscount': '8', 'groupShowMoney': 1405.8, 'groupOrderDiscount': '8'}, {'discountPercent': 0.18, 'prePayPercent': 1.0, 'showMoney': 1440.0, 'preferentialMoeny': 340.0, 'groupDiscountPercent': 0.23, 'groupPreferentialMoney': 420.0, 'prePayMoeny': 1780.0, 'orderDiscount': '8.2', 'groupShowMoney': 1360.0, 'groupOrderDiscount': '7.7'}], 'turnOrOff': 1, 'prePayId': '6619', 'isCanPay': 1}, 'errno': 0}
+errorno = 0
+Get the prepayid is 6619
+Get the groupMemberCount is 2
+Get the  preferentialList is [{'discountPercent': 0.2, 'prePayPercent': 0.99, 'showMoney': 1405.8, 'preferentialMoeny': 356.4, 'groupDiscountPercent': 0.2, 'groupPreferentialMoney': 356.4, 'prePayMoeny': 1762.2, 'orderDiscount': '8', 'groupShowMoney': 1405.8, 'groupOrderDiscount': '8'}, {'discountPercent': 0.18, 'prePayPercent': 1.0, 'showMoney': 1440.0, 'preferentialMoeny': 340.0, 'groupDiscountPercent': 0.23, 'groupPreferentialMoney': 420.0, 'prePayMoeny': 1780.0, 'orderDiscount': '8.2', 'groupShowMoney': 1360.0, 'groupOrderDiscount': '7.7'}]
+Passed: mendian addorder  successed. 
+Test data and api url | {'preTotalPrice': 1440.0, 'access_phone': '', 'token': '18c6424b7ba24a4483d32de0151a038a', 'prePayPercent': 1.0, 'prePayId': '6619', 'userId': '200001878', 'userid': '200001878'} |  /wechatH5/api/voucher/getCanUseVoucherList
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /wechatH5/api/voucher/getCanUseVoucherList
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'preTotalPrice': 1440.0, 'access_phone': '', 'token': '18c6424b7ba24a4483d32de0151a038a', 'prePayPercent': 1.0, 'prePayId': '6619', 'userId': '200001878', 'userid': '200001878'}
+errorno = 0
+Get the voucherList 
+Passed: mendian getcanuservoucher  successed. 
+Test data and api url | {'prePayId': '6619', 'access_phone': '', 'token': '18c6424b7ba24a4483d32de0151a038a', 'userId': '200001878', 'userid': '200001878'} |  /wechatH5/api/fullarea/getFullAreaMsg
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /wechatH5/api/fullarea/getFullAreaMsg
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'prePayId': '6619', 'access_phone': '', 'token': '18c6424b7ba24a4483d32de0151a038a', 'userId': '200001878', 'userid': '200001878'}
+response:  {'data': {'fullAreaState': 1, 'fullAreaMsg': '单笔亩数在100~300亩，打9.0折；301~500亩，打8.0折；501亩以上，打7.0折。作业完成后根据实际的作业亩次享受优惠。'}, 'errno': 0}
+errorno = 0
+Get the fullareastate is 1
+Get the fullareamsg is 单笔亩数在100~300亩，打9.0折；301~500亩，打8.0折；501亩以上，打7.0折。作业完成后根据实际的作业亩次享受优惠。
+Passed: mendian getfullarea  successed. 
+Test data and api url | {'access_phone': '', 'phone': '18301212965', 'smsType': 2, 'token': '18c6424b7ba24a4483d32de0151a038a', 'userId': '200001878', 'userid': '200001878'} |  /wechatH5/api/wallet/getBalance
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /wechatH5/api/wallet/getBalance
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'access_phone': '', 'phone': '18301212965', 'smsType': 2, 'token': '18c6424b7ba24a4483d32de0151a038a', 'userId': '200001878', 'userid': '200001878'}
+response:  {'data': {'phone': 18301212965, 'amount': 409788.4}, 'errno': 0}
+errorno = 0
+Get the amount is 409788.4
+Passed: mendian getbalance  successed. 
+Test data and api url | {'preTotalPrice': 1440.0, 'access_phone': '', 'token': '18c6424b7ba24a4483d32de0151a038a', 'openid': 'o3_xvw0SFrwEPxeQfpAtjjXNHztA', 'prePayPercent': 1.0, 'checkCode': '1234', 'prePayId': '6619', 'userId': '200001878', 'userid': '200001878', 'prepayPercent': 1} |  /wechatH5/api/wallet/orderPrePay
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /wechatH5/api/wallet/orderPrePay
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'preTotalPrice': 1440.0, 'access_phone': '', 'token': '18c6424b7ba24a4483d32de0151a038a', 'openid': 'o3_xvw0SFrwEPxeQfpAtjjXNHztA', 'prePayPercent': 1.0, 'checkCode': '1234', 'prePayId': '6619', 'userId': '200001878', 'userid': '200001878', 'prepayPercent': 1}
+response:  {'data': {'orderNumber': '51701533317429505', 'prePayId': '6619'}, 'errno': 0}
+errorno = 0
+Get the order_number is 51701533317429505
+Passed: mendian addorderpay  successed. 
+{'userName': 'lirunhua', 'passWord': '123456'} 
+ /management/sys/login
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /management/sys/login
+timeout 10
+
+post data {'userName': 'lirunhua', 'passWord': '123456'}
+text {"errno":0,"data":{"FARMFRIEND_TOKEN":"eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0=","FARMFRIEND_LT":"1533317436613"}}
+eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0=
+farmtoken= eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0=
+response  {'data': {'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0=', 'FARMFRIEND_LT': '1533317436613'}, 'errno': 0}
+errorno = 0
+{'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0=', 'FARMFRIEND_LT': '1533317436613'}
+passed:System login successed
+eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0=
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /management/order/queryFlyOrderList
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0='}
+post data  {'salesmanId': '-1', 'phone': '', '3': 't', 'isPay': '-1', 'crops_name': '-1', 'teamWork': '-1', 'medicineServie': '-1', 'state': '-1', '0': 'p', 'workAddress': '', 'isLongReserve': '-1', 'type': '1', 'region': '', 'hasMedicine': '-1', 'fromSalesmanManage': '0', 'sonCompanyId': '-1', '1': 'o', 'sort': '', 'isTest': '0', 'order_number': '', 'endCreateTime': '2018-12-31', 'salesman_name': '', '2': 's', 'sopTagid': '', 'order': '', 'startCreateTime': '2018-01-01', 'makePeople': '', 'page': '1', 'flyUserType': '-1', 'acceptOrderPeople': ''}
+errorno = 0
+Passed:sys query orderlist  successed
+get order_id of 17736
+Test data and api url | {'rows': '50', 'phone': '18301212965', 'id': 17736, 'label': '-1', 'sort': 'xy', 'time': datetime.date(2018, 8, 4), 'isBusy': '-1', 'region': '-1', 'teamName': '', 'name': '', 'order': 'asc', 'role': '-1', 'page': '1', 'address': '', 'isAll': '1', 'isInnerUser': '-1', 'reserveRole': '-1'} |  /management/user/queryAssignFlyUser
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /management/user/queryAssignFlyUser
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0='}
+post data  {'rows': '50', 'phone': '18301212965', 'id': 17736, 'label': '-1', 'sort': 'xy', 'time': datetime.date(2018, 8, 4), 'isBusy': '-1', 'region': '-1', 'teamName': '', 'name': '', 'order': 'asc', 'role': '-1', 'page': '1', 'address': '', 'isAll': '1', 'isInnerUser': '-1', 'reserveRole': '-1'}
+errorno = 0
+Passed:sys query assign flyuser  successed
+get flyuser_id of 2187
+2187
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /management/order/publishOrder
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'FARMFRIEND_TOKEN': 'eyJ1aWQiOiI3NSIsInRva2VuIjoiOTkyM2QyNjUtYzliNi00YmYxLTliYTItMzQ1ZGViOWJmY2IwIn0='}
+post data  {'sendType': '1', 'id': 17736, 'subsidyPercentage': '1', 'isTeam': '0', 'workStartTime': '2018-08-04', 'isAll': '1', 'teamUserNum': '1', 'extractingPercentage': '2.7', 'orderNumber': '51701533317429505', 'planeNum': '0', 'days': '1', 'flyUser': 2187}
+response:  {'data': {'batch': '20180804013039620'}, 'errno': 0, 'errmsg': 'null派单成功!'}
+errorno = 0
+Passed:sys  publishorder  successed
+{'password': '123qwe', 'phone': '18301212965'} 
+ /flyHandApp/api/user/loginPassword
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /flyHandApp/api/user/loginPassword
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'password': '123qwe', 'phone': '18301212965'}
+response:  {'info': '操作成功', 'errorCode': 0, 'datas': {'loginSuccess': {'phone': '18301212965', 'head_url': 'http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/29C6B8771FE74B34951979A87DD2948B', 'liable_name': '测试', 'position_county_id': None, 'balance': '6734319.69', 'provinceId': None, 'liable_identity': '210824197701162028', 'authState': 3, 'max_work': '2147483647.00', 'type': '1', 'total': '1000.00', 'hasPw': 'true', 'business_type': '1', 'password': 'tX6of8X04aE=', 'userRole': 0, 'create_time': '2018-03-12 15:58:42.0', 'pilotType': '2', 'liable_identity_url': 'http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/5bc44d85aac44ec6a4b627aec71cdc7e', 'token': '1fb88171dd6a42c383594879c97e0739', 'isMember': '0', 'team_name': '小李子飞防队', 'state': 2, 'team_people_number': None, 'userId': 2187}}}
+errorCode = 0
+FSD login successed
+(1, '1fb88171dd6a42c383594879c97e0739', 2187)
+{'direct': 'down', 'startid': '9223372036854775807', 'count': 10, 'type': 2, 'outer_uid': 2187}
+Test data and api url | {'direct': 'down', 'startid': '9223372036854775807', 'count': 10, 'type': 2, 'outer_uid': '2187'} |  /msgcenter/api/v2/getusermsg?userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /msgcenter/api/v2/getusermsg?userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'direct': 'down', 'startid': '9223372036854775807', 'count': 10, 'type': 2, 'outer_uid': '2187'}
+errorno = 0
+Passed: fsd msgcenter successed. 
+Get the msg id 100000002692506
+Test data and api url | {'msgId': 100000002692506, 'orderNumber': '51701533317429505'} |  /flyHandApp/api/order/orderPromptQuery?access_phone=18301212965&amp;userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /flyHandApp/api/order/orderPromptQuery?access_phone=18301212965&amp;userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'msgId': 100000002692506, 'orderNumber': '51701533317429505'}
+response:  {'info': '操作成功', 'errorCode': 0, 'datas': {'prompt': {'promptCode': 0, 'prompt': ''}}}
+errorno = 0
+Passed: fsd orderPromptQuery successed. 
+Test data and api url | {'work_time': '2018-08-04 00:00至2018-08-04', 'actual_area': '', 'rent': '', 'medicineUrl': '', 'areaState': '0', 'assistService': '0', 'planeState': '0', 'fly_dosage': '', 'takeTime': '', 'actual_total_price': '', 'repayTime': '', 'msgId': 100000002692506, 'spraying_time': '2018-07-31 00:00至2018-07-31', 'state': 3, 'model': '', 'type': '0', 'orderNumber': '51701533317429505', 'userid': 2187, 'order_amount': 1440.0} |  /flyHandApp/api/order/updateOrderState?access_phone=18301212965&amp;userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /flyHandApp/api/order/updateOrderState?access_phone=18301212965&amp;userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'work_time': '2018-08-04 00:00至2018-08-04', 'actual_area': '', 'rent': '', 'medicineUrl': '', 'areaState': '0', 'assistService': '0', 'planeState': '0', 'fly_dosage': '', 'takeTime': '', 'actual_total_price': '', 'repayTime': '', 'msgId': 100000002692506, 'spraying_time': '2018-07-31 00:00至2018-07-31', 'state': 3, 'model': '', 'type': '0', 'orderNumber': '51701533317429505', 'userid': 2187, 'order_amount': 1440.0}
+response:  {'info': '操作成功', 'errorCode': 0, 'datas': {'isShowFlag': None, 'prompt': {'promptCode': 0, 'prompt': ''}}}
+errorno = 0
+Passed: fsd updateorderstate successed. 
+Test data and api url | {'taskOrderType': 1, 'orderNumber': '51701533317429505'} |  /flyHandApp/api/order/orderBoundQuery?access_phone=18301212965&amp;userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /flyHandApp/api/order/orderBoundQuery?access_phone=18301212965&amp;userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+timeout 10
+{'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/4.0'}
+post data  {'taskOrderType': 1, 'orderNumber': '51701533317429505'}
+response:  {'data': {'actualWorkStartTime': 0, 'isOrderOwner': '1', 'actualWorkEndTime': 0, 'isUseDrug': 0, 'oneselfPositionName': '负责人', 'oneselfBound': '0', 'oneselfRoleName': '老板', 'serviceConfirmSheet': '[]', 'submitOrderArea': 0.0, 'isAlreadyAddFarmer': 1, 'oneselfRole': '0', 'bindPlaneNumber': 4, 'medicalInformation': '[]'}, 'errno': 0}
+errorno = 0
+Passed: fsd orderboundquery successed. 
+------------this is your order info-------------------------
+------------------------------------------------------------
+ids,flyuser_phone,token,ordernumber,msg_id,submitorderdata,area
+2187 18301212965 1fb88171dd6a42c383594879c97e0739 51701533317429505 100000002692506 {'msgId': '100000002676403', 'fly_actual_area': '250.0', 'actual_area': '250.0', 'state': '4', 'actualWorkEndTime': '1533026820', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'orderNumber': '96421533021791506', 'actualWorkStartTime': '1533021900', 'userid': '2187', 'totalSprayedDays': '1', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]'} 300
+------------------------------------------------------------
+Test data and api url | {'msgId': 100000002692506, 'fly_actual_area': 300, 'actual_area': 300, 'state': '4', 'actualWorkEndTime': '1533026820', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'orderNumber': '51701533317429505', 'actualWorkStartTime': '1533021900', 'userid': 2187, 'totalSprayedDays': '1', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]'} |  /flyHandApp/api/order/updateOrderState?access_phone=18301212965&amp;userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+------------------------------------------------------------------------------
+start post request....
+ip: ceshi.farmfriend.com.cn
+port: 80
+url: /flyHandApp/api/order/updateOrderState?access_phone=18301212965&amp;userId=2187&amp;token=1fb88171dd6a42c383594879c97e0739
+timeout 10
+{'content-type': 'application/x-www-form-urlencoded'}
+post data  {'msgId': 100000002692506, 'fly_actual_area': 300, 'actual_area': 300, 'state': '4', 'actualWorkEndTime': '1533026820', 'serviceConfirmSheet': '["http:\\/\\/farmlandbucketstest.oss-cn-beijing.aliyuncs.com\\/07b6fd8d8aaf4008814e31a3894efc92"]', 'orderNumber': '51701533317429505', 'actualWorkStartTime': '1533021900', 'userid': 2187, 'totalSprayedDays': '1', 'medicalInformation': '[{"drugNumber":0.0,"drugPositiveUrl":"http://farmlandbucketstest.oss-cn-beijing.aliyuncs.com/d6a45d9bdb9843f88fa865ef402c2182","drugReverseUrl":"","unitMu":0.0}]'}
+response:  {'info': '操作成功', 'errorCode': 0, 'datas': {'isShowFlag': '1'}}
+errorno = 0
+Passed: fsd submitorder successed. 
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+    <td></td>
+</tr>
+
+<tr id='total_row'>
+    <td>统计</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td> </td>
+    <td> </td>
+</tr>
+</table>
+<script>
+    drawCircle(1, 0, 0)
+</script>
+
+<div id='ending'> </div>
+
+</body>
+</html>

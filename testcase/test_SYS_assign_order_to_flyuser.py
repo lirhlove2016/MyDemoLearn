@@ -15,7 +15,7 @@ from common import HTMLTestRunner
 from  time  import sleep
 
 from modules.FSD_ReserveOrder_module import *
-from modules.SYS_FSD_submit_order import *
+from modules.Addorder_submitorder_module import *
 
 from common.basic_http import * 
 
@@ -28,7 +28,7 @@ from  data import System_Management_testdata as sysuser
 from common.FSD_UserLogin import FSDLogin
 from  data import readtxt 
 
-from testcase.test_ywb_addorder import Test_addorder
+from testcase.test_ywb_md_addorder import Test_addorder
 
 my_obj = FSDLogin()
 

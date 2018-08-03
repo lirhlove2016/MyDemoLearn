@@ -20,7 +20,7 @@ from conf import server_config as device
 from conf import api_url as api
 
 from modules.FSD_ReserveOrder_module import *
-from modules.SYS_FSD_submit_order import *
+from modules.Addorder_submitorder_module import *
 
 from  data import Flyuser_testdata as flyuser
 from  data import System_Management_testdata as sysuser
